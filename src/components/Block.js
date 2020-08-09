@@ -15,6 +15,7 @@ function Block(props) {
     isOpen,
     onDiamondFound,
     onBlockOpened,
+    won,
   } = props
 
   const [blockState, setBlockState] = useState({
@@ -42,11 +43,13 @@ function Block(props) {
   }, [blockElt])
 
   const changeOpenState = () => {
-    setBlockState(prevState => {
-      let newState = prevState;
-      newState.isOpen = true;
-      return {...newState};
-    })
+    if (!won && !blockState.isOpen) {
+      setBlockState(prevState => {
+        let newState = prevState;
+        newState.isOpen = true;
+        return {...newState};
+      })
+    }
   }
   
 

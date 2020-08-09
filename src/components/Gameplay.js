@@ -6,13 +6,18 @@ import {
 } from 'react';
 import Block from './Block';
 import constants from '../constants'
+import Button from './Button';
 
-function Gameplay() {
+function Gameplay(props) {
+
+  const {
+    onReplayGame
+  } = props;
 
   const [playGrid, setPlayGrid] = useState([])
 
   const [playState, setPlayState] = useState({
-    score: constants.gameBlocks,
+    score: constants.gameBlocks - constants.diamondsToFind,
     diamondsLeftToFind: constants.diamondsToFind,
     won: false,
   })
@@ -63,6 +68,10 @@ function Gameplay() {
     return [...grid]
   }
 
+  const replayGame = () => {
+    onReplayGame();
+  }
+
   return (
     <>
       <div className={styles.ratioMaintainer}>
@@ -75,6 +84,7 @@ function Gameplay() {
                 isOpen={blockState.isOpen}
                 onDiamondFound={onDiamondFound}
                 onBlockOpened={onBlockOpened}
+                won={playState.won}
               >
               </Block>
             ))
@@ -88,14 +98,25 @@ function Gameplay() {
           {constants.diamondsToFind}
         </span>
       </div>
+
       {
         playState.won &&
-        <div className={styles.infoArea}>
-            Congratulations you won!!
-            <span className={styles.score}>
-              Score: {playState.score - 1}
-            </span>
-        </div>
+        <>
+          <div className={styles.infoArea}>
+              Congratulations you found all the diamonds!!
+              <span className={styles.score}>
+                Score: {playState.score}
+              </span>
+          </div>
+          <div className={styles.infoArea}>
+            <Button
+              className = {styles.replayBtn}
+              onClick={replayGame}
+            >
+              Replay
+            </Button>
+          </div>
+        </>
       }
     </>
   )

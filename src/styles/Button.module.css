@@ -1,0 +1,18 @@
+.btn {
+    background: linear-gradient(12deg, #0af4ff, #efff00);
+    border: 2px solid skyblue;
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-weight: 600;
+    color: darkblue;
+}
+
+.btn:focus,
+.btn:visited,
+.btn:active {
+  outline: none;
+}
+
+.btn:active {
+    background: linear-gradient(45deg, #efff00, #0af4ff);
+}

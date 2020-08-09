@@ -1,8 +1,8 @@
 .ratioMaintainer {
     max-width: calc(64px * 8);
     min-width: 200px;
+    margin: 0 auto;
 }
-
 
 .grid {
     width: 100%;
@@ -10,14 +10,21 @@
     max-height: calc(64px * 8);
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .infoArea {
     margin-top: 1em;
-    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    text-align: center;
 }
 
 .score {
     margin-left: 0.5em;
     font-weight: 600;
+    font-size: 18px;
+}
+
+.replayBtn {
+    font-size: 16px;
 }
