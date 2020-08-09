@@ -1,0 +1,7 @@
+.block {
+    flex-basis: calc(100% / 8.5);
+    flex-grow: 0;
+    flex-shrink: 0;
+    border: 1px solid black;
+    margin: 1px;
+}
