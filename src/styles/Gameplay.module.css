@@ -1,19 +1,23 @@
 .ratioMaintainer {
-    position: relative;
-    padding-bottom: 100%;
-    height: 0;
     max-width: calc(64px * 8);
     min-width: 200px;
 }
 
 
 .grid {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     max-height: calc(64px * 8);
     display: flex;
     flex-wrap: wrap;
+}
+
+.infoArea {
+    margin-top: 1em;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.score {
+    margin-left: 0.5em;
+    font-weight: 600;
 }

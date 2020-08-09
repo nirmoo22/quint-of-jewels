@@ -3,7 +3,10 @@ import React from 'react';
 import {
   useState,
   useEffect,
+  useRef,
 } from 'react';
+import diamondImg from '../assets/images/diamond.png';
+import questionImg from '../assets/images/question.png';
 
 function Block(props) {
 
@@ -19,6 +22,9 @@ function Block(props) {
     hasDiamond: hasDiamond,
   })
 
+  const blockElt = useRef(null);
+  const [blockMinHeight, setBlockMinHeight] = useState(null);
+
   useEffect(() => {
     if (blockState.isOpen && blockState.hasDiamond)
       onDiamondFound();
@@ -26,6 +32,14 @@ function Block(props) {
       onBlockOpened();
   // eslint-disable-next-line
   },[blockState])
+
+
+  useEffect(() => {
+    // Get offset height and assign it, to prevent flex item from collapsing
+    // if row has no images.
+    if (blockElt.current && blockElt.current.offsetHeight)
+      setBlockMinHeight(blockElt.current.offsetHeight)
+  }, [blockElt])
 
   const changeOpenState = () => {
     setBlockState(prevState => {
@@ -39,12 +53,16 @@ function Block(props) {
   return (
     <div className={styles.block + ' pointer'}
       onClick={changeOpenState}
+      ref={blockElt}
+      style={{minHeight: blockMinHeight || 'initial'}}
     >
       {
-        blockState.isOpen && blockState.hasDiamond && 'D'
+        blockState.isOpen && blockState.hasDiamond && 
+        <img className={styles.blockImg} src={diamondImg} alt="Diamonds" />
       }
       {
-        !blockState.isOpen && 'Q'
+        !blockState.isOpen &&
+        <img className={styles.blockImg} src={questionImg} alt="Not open" />
       }
     </div>
   )
