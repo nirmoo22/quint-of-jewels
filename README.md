@@ -2,6 +2,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # Quint of Jewels
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1ac611dc-3dfe-4615-9f7b-f3b2d4151aef/deploy-status)](https://app.netlify.com/sites/quint-of-jewels/deploys)
+
 A game to find the hidden gemstones! Find all to win it!
 
 ## Link
