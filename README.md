@@ -4,6 +4,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 A game to find the hidden gemstones! Find all to win it!
 
+## Installing
+
+From your command line go to your projects directory and type these commands
+```bash
+    git clone https://github.com/nirmoo22/quint-of-jewels.git
+    cd quint-of-jewels
+    yarn install
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
