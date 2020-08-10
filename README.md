@@ -4,6 +4,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 A game to find the hidden gemstones! Find all to win it!
 
+## Link
+
+* [Online Demo](https://quint-of-jewels.netlify.app/)
+
 ## Installing
 
 From your command line go to your projects directory and type these commands
