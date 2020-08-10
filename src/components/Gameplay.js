@@ -7,6 +7,7 @@ import {
 import Block from './Block';
 import constants from '../constants'
 import Button from './Button';
+import useCreateGameplayGrid from '../hooks/useCreateGameplayGrid';
 
 function Gameplay(props) {
 
@@ -14,28 +15,13 @@ function Gameplay(props) {
     onReplayGame
   } = props;
 
-  const [playGrid, setPlayGrid] = useState([])
-
   const [playState, setPlayState] = useState({
     score: constants.gameBlocks - constants.diamondsToFind,
     diamondsLeftToFind: constants.diamondsToFind,
     won: false,
   })
 
-  useEffect(() => {
-    setPlayGrid(() => {
-      let newGrid = [];
-
-      for (let i = 0; i < constants.gameBlocks; i++) {
-        newGrid.push({
-          hasDiamond: i < constants.diamondsToFind ? true : false,
-          isOpen: false,
-        })
-      }
-      newGrid = shuffleGrid(newGrid)
-      return newGrid;
-    })
-  }, [])
+  const playGrid = useCreateGameplayGrid();
 
   useEffect(() => {
     if (playState.diamondsLeftToFind === 0) {
@@ -58,14 +44,6 @@ function Gameplay(props) {
       prevState.score -= 1;
       return {...prevState}
     })
-  }
-
-  const shuffleGrid = (grid) => {
-    for(let i = grid.length - 1; i >= 1; i--) {
-      let j = Math.floor(Math.random() * i);
-      [grid[i], grid[j]] = [grid[j], grid[i]];
-    }
-    return [...grid]
   }
 
   const replayGame = () => {
