@@ -8,6 +8,7 @@ import Block from './Block';
 import constants from '../constants'
 import Button from './Button';
 import useCreateGameplayGrid from '../hooks/useCreateGameplayGrid';
+import useGetDiamondLocations from '../hooks/useGetDiamondLocations';
 
 function Gameplay(props) {
 
@@ -19,9 +20,14 @@ function Gameplay(props) {
     score: constants.gameBlocks - constants.diamondsToFind,
     diamondsLeftToFind: constants.diamondsToFind,
     won: false,
+    activeBlockLocation: -1,
+    diamondsFoundAt: {}
   })
 
   const playGrid = useCreateGameplayGrid();
+  const diamondLocations = useGetDiamondLocations(
+    playGrid, playState.diamondsFoundAt, playState.activeBlockLocation
+  );
 
   useEffect(() => {
     if (playState.diamondsLeftToFind === 0) {
@@ -32,16 +38,19 @@ function Gameplay(props) {
     }
   }, [playState.diamondsLeftToFind])
 
-  const onDiamondFound = () => {
+  const onDiamondFound = (newActiveBlockLocation) => {
     setPlayState(prevState => {
       prevState.diamondsLeftToFind -= 1;
+      prevState.activeBlockLocation = newActiveBlockLocation
+      prevState.diamondsFoundAt[newActiveBlockLocation] = true;
       return {...prevState}
     });
   }
 
-  const onBlockOpened = () => {
+  const onBlockOpened = (newActiveBlockLocation) => {
     setPlayState(prevState => {
       prevState.score -= 1;
+      prevState.activeBlockLocation = newActiveBlockLocation
       return {...prevState}
     })
   }
@@ -58,11 +67,14 @@ function Gameplay(props) {
             playGrid.map((blockState, idx) => (
               <Block
                 key={idx}
+                blockLocation={idx}
                 hasDiamond={blockState.hasDiamond}
                 isOpen={blockState.isOpen}
                 onDiamondFound={onDiamondFound}
                 onBlockOpened={onBlockOpened}
+                diamondLocations={diamondLocations}
                 won={playState.won}
+                activeBlockLocation={playState.activeBlockLocation}
               >
               </Block>
             ))

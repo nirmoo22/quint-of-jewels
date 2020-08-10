@@ -11,3 +11,35 @@
     height: 100%;
     width: 100%;
 }
+
+.top {
+    transform: rotate(-90deg);
+}
+
+.bottom {
+    transform: rotate(90deg);
+}
+
+.left {
+    transform: rotate(180deg);
+}
+
+.right {
+    transform: rotate(0deg);
+}
+
+.topRight {
+    transform: rotate(-45deg);
+}
+
+.bottomRight {
+    transform: rotate(45deg);
+}
+
+.bottomLeft {
+    transform: rotate(135deg);
+}
+
+.topLeft {
+    transform: rotate(-135deg);
+}
