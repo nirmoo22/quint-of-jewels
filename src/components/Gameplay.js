@@ -5,6 +5,7 @@ import {
   useEffect,
 } from 'react';
 import Block from './Block';
+import PeekingBlock from './PeekingBlock';
 import constants from '../constants'
 import Button from './Button';
 import useCreateGameplayGrid from '../hooks/useCreateGameplayGrid';
@@ -21,8 +22,19 @@ function Gameplay(props) {
     diamondsLeftToFind: constants.diamondsToFind,
     won: false,
     activeBlockLocation: -1,
-    diamondsFoundAt: {}
+    diamondsFoundAt: {},
+    peeking: true,
   })
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setPlayState(prevState => ({
+        ...prevState,
+        peeking: false,
+      }))
+    }, 1000)
+    return () => clearTimeout(timeout);
+  }, [])
 
   const playGrid = useCreateGameplayGrid();
   const diamondLocations = useGetDiamondLocations(
@@ -33,7 +45,7 @@ function Gameplay(props) {
     if (playState.diamondsLeftToFind === 0) {
       setPlayState(prevState => {
         prevState.won = true;
-        return {...prevState}
+        return { ...prevState }
       })
     }
   }, [playState.diamondsLeftToFind])
@@ -43,7 +55,7 @@ function Gameplay(props) {
       prevState.diamondsLeftToFind -= 1;
       prevState.activeBlockLocation = newActiveBlockLocation
       prevState.diamondsFoundAt[newActiveBlockLocation] = true;
-      return {...prevState}
+      return { ...prevState }
     });
   }
 
@@ -51,7 +63,7 @@ function Gameplay(props) {
     setPlayState(prevState => {
       prevState.score -= 1;
       prevState.activeBlockLocation = newActiveBlockLocation
-      return {...prevState}
+      return { ...prevState }
     })
   }
 
@@ -65,18 +77,30 @@ function Gameplay(props) {
         <div className={styles.grid}>
           {
             playGrid.map((blockState, idx) => (
-              <Block
-                key={idx}
-                blockLocation={idx}
-                hasDiamond={blockState.hasDiamond}
-                isOpen={blockState.isOpen}
-                onDiamondFound={onDiamondFound}
-                onBlockOpened={onBlockOpened}
-                diamondLocations={diamondLocations}
-                won={playState.won}
-                activeBlockLocation={playState.activeBlockLocation}
-              >
-              </Block>
+              <React.Fragment key={idx}>
+                {
+                  playState.peeking &&
+                  <PeekingBlock
+                    hasDiamond={blockState.hasDiamond}
+                  >
+
+                  </PeekingBlock>
+                }
+                {
+                  !playState.peeking &&
+                  <Block
+                    blockLocation={idx}
+                    hasDiamond={blockState.hasDiamond}
+                    isOpen={blockState.isOpen}
+                    onDiamondFound={onDiamondFound}
+                    onBlockOpened={onBlockOpened}
+                    diamondLocations={diamondLocations}
+                    won={playState.won}
+                    activeBlockLocation={playState.activeBlockLocation}
+                  >
+                  </Block>
+                }
+              </React.Fragment>
             ))
           }
         </div>
@@ -93,14 +117,14 @@ function Gameplay(props) {
         playState.won &&
         <>
           <div className={styles.infoArea}>
-              Congratulations you found all the diamonds!!
+            Congratulations you found all the diamonds!!
               <span className={styles.score}>
-                Score: {playState.score}
-              </span>
+              Score: {playState.score}
+            </span>
           </div>
           <div className={styles.infoArea}>
             <Button
-              className = {styles.replayBtn}
+              className={styles.replayBtn}
               onClick={replayGame}
             >
               Replay

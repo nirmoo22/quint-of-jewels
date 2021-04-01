@@ -9,6 +9,7 @@ import useFindNearestDiamond from '../hooks/useFindNearestDiamond';
 import diamondImg from '../assets/images/diamond.png';
 import questionImg from '../assets/images/question.png';
 import arrowImg from '../assets/images/arrow.png';
+import constants from '../constants';
 
 function Block(props) {
 
@@ -25,6 +26,7 @@ function Block(props) {
 
   const [blockState, setBlockState] = useState({
     isOpen: isOpen,
+    isPeeking: true,
     hasDiamond: hasDiamond,
   })
 
@@ -33,7 +35,6 @@ function Block(props) {
   )
 
   const blockElt = useRef(null);
-  const [blockMinHeight, setBlockMinHeight] = useState(null);
 
   useEffect(() => {
     if (blockState.isOpen && blockState.hasDiamond)
@@ -42,14 +43,6 @@ function Block(props) {
       onBlockOpened(blockLocation);
   // eslint-disable-next-line
   },[blockState])
-
-
-  useEffect(() => {
-    // Get offset height and assign it, to prevent flex item from collapsing
-    // if row has no images.
-    if (blockElt.current && blockElt.current.offsetHeight)
-      setBlockMinHeight(blockElt.current.offsetHeight)
-  }, [blockElt])
 
   const changeOpenState = () => {
     if (!won && !blockState.isOpen) {
@@ -87,7 +80,8 @@ function Block(props) {
     <div className={styles.block + ' pointer'}
       onClick={changeOpenState}
       ref={blockElt}
-      style={{minHeight: blockMinHeight || 'initial'}}
+      // change height to something better
+      style={{minHeight: constants.gameBlocks + 'px'}}
     >
       {
         blockState.isOpen && blockState.hasDiamond && 

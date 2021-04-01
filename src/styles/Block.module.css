@@ -4,7 +4,6 @@
     flex-shrink: 0;
     border: 1px solid black;
     margin: 1px;
-    min-height: calc(100% / 8);
 }
 
 .blockImg {
