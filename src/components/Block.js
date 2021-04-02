@@ -9,7 +9,6 @@ import useFindNearestDiamond from '../hooks/useFindNearestDiamond';
 import diamondImg from '../assets/images/diamond.png';
 import questionImg from '../assets/images/question.png';
 import arrowImg from '../assets/images/arrow.png';
-import constants from '../constants';
 
 function Block(props) {
 
@@ -80,8 +79,6 @@ function Block(props) {
     <div className={styles.block + ' pointer'}
       onClick={changeOpenState}
       ref={blockElt}
-      // change height to something better
-      style={{minHeight: constants.gameBlocks + 'px'}}
     >
       {
         blockState.isOpen && blockState.hasDiamond && 

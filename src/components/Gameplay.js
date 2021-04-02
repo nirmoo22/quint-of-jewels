@@ -83,7 +83,6 @@ function Gameplay(props) {
                   <PeekingBlock
                     hasDiamond={blockState.hasDiamond}
                   >
-
                   </PeekingBlock>
                 }
                 {
